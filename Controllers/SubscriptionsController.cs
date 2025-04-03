@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ExpennyApi.Data;
 using ExpennyApi.Models;
+using ExpennyApi.Repositories;
+using SQLitePCL;
 
 namespace ExpennyApi.Controllers
 {
@@ -8,20 +10,18 @@ namespace ExpennyApi.Controllers
     [Route("api/[controller]")]
     public class SubscriptionsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ISubscriptionRepository _repo;
 
-        public SubscriptionsController(AppDbContext context)
+        public SubscriptionsController(ISubscriptionRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: /api/subscriptions/{userId}
         [HttpGet("{userId}")]
         public ActionResult<IEnumerable<Subscription>> GetByUser(string userId)
         {
-            var subs = _context.Subscriptions
-                .Where(s => s.UserId == userId)
-                .ToList();
+            var subs = _repo.GetByUserId(userId);
 
             return Ok(subs);
         }
@@ -30,8 +30,8 @@ namespace ExpennyApi.Controllers
         [HttpPost]
         public ActionResult<Subscription> AddSubscription([FromBody] Subscription sub)
         {
-            _context.Subscriptions.Add(sub);
-            _context.SaveChanges();
+            _repo.Add(sub);
+            _repo.Save();
 
             return CreatedAtAction(nameof(GetByUser), new { userId = sub.UserId }, sub);
         }
@@ -40,11 +40,12 @@ namespace ExpennyApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var sub = _context.Subscriptions.Find(id);
+            var sub = _repo.GetById(id);
             if (sub == null) return NotFound();
 
-            _context.Subscriptions.Remove(sub);
-            _context.SaveChanges();
+            _repo.Delete(sub);
+            _repo.Save();
+
             return NoContent();
         }
 
@@ -52,7 +53,7 @@ namespace ExpennyApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Subscription updated)
         {
-            var existing = _context.Subscriptions.Find(id);
+            var existing = _repo.GetById(id);
             if (existing == null) return NotFound();
 
             existing.Name = updated.Name;
@@ -66,7 +67,7 @@ namespace ExpennyApi.Controllers
             existing.Notes = updated.Notes;
             existing.Status = updated.Status;
 
-            _context.SaveChanges();
+            _repo.Save();
             return Ok(existing);
         }
     }
