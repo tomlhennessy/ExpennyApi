@@ -1,4 +1,5 @@
 using ExpennyApi.Data;
+using ExpennyApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Register DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 // Add Controllers + Swagger
 builder.Services.AddControllers();
