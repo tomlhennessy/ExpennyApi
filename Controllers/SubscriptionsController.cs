@@ -15,6 +15,7 @@ namespace ExpennyApi.Controllers
             _context = context;
         }
 
+        // GET: /api/subscriptions/test-user-123
         [HttpGet("{userId}")]
         public ActionResult<IEnumerable<Subscription>> GetByUser(string userId)
         {
@@ -23,6 +24,16 @@ namespace ExpennyApi.Controllers
                 .ToList();
 
             return Ok(subs);
+        }
+
+        // POST: /api/subscriptions
+        [HttpPost]
+        public ActionResult<Subscription> AddSubscription(Subscription sub)
+        {
+            _context.Subscriptions.Add(sub);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetByUser), new { userId = sub.UserId }, sub);
         }
     }
 }
