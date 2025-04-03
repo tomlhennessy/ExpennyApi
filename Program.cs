@@ -14,6 +14,17 @@ builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); // Needed for Swagger
 builder.Services.AddSwaggerGen();           // Adds Swagger
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        builder =>
+        {
+            builder
+                .WithOrigins("http://localhost:3000") // React app
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 // Optional: Explicit ports (only needed if launchSettings isn't behaving)
 builder.WebHost.ConfigureKestrel(options =>
@@ -24,6 +35,8 @@ builder.WebHost.ConfigureKestrel(options =>
         listenOptions.UseHttps();  // HTTPS
     });
 });
+
+
 
 var app = builder.Build();
 
@@ -42,5 +55,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+app.UseCors("AllowFrontend");
 app.MapControllers();
 app.Run();
