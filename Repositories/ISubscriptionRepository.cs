@@ -5,7 +5,7 @@ namespace ExpennyApi.Repositories
     public interface ISubscriptionRepository
     {
         IEnumerable<Subscription> GetByUserId(string userId);
-        Subscription GetById(int id);
+        Subscription? GetById(int id);
         void Add(Subscription sub);
         void Update(Subscription sub);
         void Delete(Subscription sub);

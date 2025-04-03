@@ -14,7 +14,7 @@ namespace ExpennyApi.Repositories
 
         public IEnumerable<Subscription> GetByUserId(string userId) => _context.Subscriptions.Where(s => s.UserId == userId).ToList();
 
-        public Subscription GetById(int id) => _context.Subscriptions.Find(id);
+        public Subscription? GetById(int id) => _context.Subscriptions.Find(id);
 
         public void Add(Subscription sub) => _context.Subscriptions.Add(sub);
 

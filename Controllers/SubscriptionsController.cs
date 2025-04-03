@@ -3,6 +3,7 @@ using ExpennyApi.Data;
 using ExpennyApi.Models;
 using ExpennyApi.Repositories;
 using SQLitePCL;
+using ExpennyApi.DTOs;
 
 namespace ExpennyApi.Controllers
 {
@@ -28,8 +29,22 @@ namespace ExpennyApi.Controllers
 
         // POST: /api/subscriptions
         [HttpPost]
-        public ActionResult<Subscription> AddSubscription([FromBody] Subscription sub)
+        public ActionResult<Subscription> AddSubscription([FromBody] SubscriptionDTO dto)
         {
+            var sub = new Subscription
+            {
+                Name = dto.Name,
+                Category = dto.Category,
+                Cost = dto.Cost,
+                Currency = dto.Currency,
+                BillingFrequency = dto.BillingFrequency,
+                PaymentMethod = dto.PaymentMethod,
+                StartDate = dto.StartDate,
+                RenewalType = dto.RenewalType,
+                Notes = dto.Notes,
+                Status = dto.Status,
+                UserId = dto.UserId
+            };
             _repo.Add(sub);
             _repo.Save();
 
@@ -40,6 +55,7 @@ namespace ExpennyApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+
             var sub = _repo.GetById(id);
             if (sub == null) return NotFound();
 
@@ -51,7 +67,7 @@ namespace ExpennyApi.Controllers
 
         // PUT: /api/subscriptions/{id}
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Subscription updated)
+        public IActionResult Update(int id, [FromBody] PutSubscriptionDTO updated)
         {
             var existing = _repo.GetById(id);
             if (existing == null) return NotFound();
