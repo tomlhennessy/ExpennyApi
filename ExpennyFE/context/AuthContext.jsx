@@ -60,12 +60,28 @@ export function AuthProvider(props) {
           console.log("🚫 Tried to add subscription but currentUser is null")
           return
         }
+        // OLD:
+        // const newSubscriptions = [...userData.subscriptions, newSubscription]
+        // setUserData({ subscriptions: newSubscriptions })
+        // await saveToFirebase(newSubscriptions)
 
-        const newSubscriptions = [...userData.subscriptions, newSubscription]
+        // New:
+        try {
+          const res = await fetch('http://localhost:5001/api/subscriptions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newSubscription)
+          })
 
-        setUserData({ subscriptions: newSubscriptions })
+          if (!res.ok) throw new Error('Failed to add sub')
 
-        await saveToFirebase(newSubscriptions)
+          const data = await res.json()
+          console.log("Sub added:", data)
+        } catch (err) {
+          console.error("Error:", err)
+        }
     }
 
 

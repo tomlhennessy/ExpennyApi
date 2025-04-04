@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/ExpennyApi.csproj": {}
+    "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/ExpennyApi.csproj": {}
   },
   "projects": {
-    "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/ExpennyApi.csproj": {
+    "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/ExpennyApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/ExpennyApi.csproj",
+        "projectUniqueName": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/ExpennyApi.csproj",
         "projectName": "ExpennyApi",
-        "projectPath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/ExpennyApi.csproj",
+        "projectPath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/ExpennyApi.csproj",
         "packagesPath": "/Users/tomhennessy/.nuget/packages/",
-        "outputPath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/obj/",
+        "outputPath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/tomhennessy/.nuget/NuGet/NuGet.Config"

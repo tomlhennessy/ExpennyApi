@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BU1DGbniahc=",
+  "dgSpecHash": "eEdDdqbn7Xg=",
   "success": true,
-  "projectFilePath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyApi/ExpennyApi.csproj",
+  "projectFilePath": "/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/ExpennyApi.csproj",
   "expectedPackageFiles": [
     "/Users/tomhennessy/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/tomhennessy/.nuget/packages/microsoft.aspnetcore.openapi/9.0.3/microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
