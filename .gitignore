@@ -1,0 +1,16 @@
+# ========== BACKEND (ExpennyAPI) ==========
+ExpennyAPI/bin/
+ExpennyAPI/obj/
+ExpennyAPI/*.db
+ExpennyAPI/Migrations/
+
+# ========== FRONTEND (ExpennyFE) ==========
+ExpennyFE/.next/
+ExpennyFE/node_modules/
+ExpennyFE/.env
+ExpennyFE/package-lock.json
+ExpennyFE/yarn.lock
+
+# ========== GLOBAL ==========
+.DS_Store
+.env
