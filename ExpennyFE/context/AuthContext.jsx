@@ -86,13 +86,27 @@ export function AuthProvider(props) {
 
 
     async function handleDeleteSubscription(index) {
-        // delete the entry at that index
-        const newSubscriptions = userData.subscriptions.filter((val, valIndex) => {
-            return valIndex != index
-        })
-        setUserData({ subscriptions: newSubscriptions })
+        const subId = userData.subscriptions[index].id
+        if (!subId) {
+          console.error("No subId found")
+          return
+        }
 
-        await saveToFirebase(newSubscriptions)
+        try {
+          const res = await fetch(`http://localhost:5001/api/subscriptions/${subId}`, {
+            method: 'DELETE'
+          })
+
+          if (!res.ok) throw new Error('Failed to delete')
+
+          console.log("Deleted subscription ID:", subId)
+
+          // OPTIONAL: update local state or re-fetch
+          // const newSubscriptions = userData.subscriptions.filter((s) => s.id !== subId)
+          // setUserData({ subscriptions: newSubscriptions })
+        } catch (err) {
+          console.error("Error deleting:", err)
+        }
     }
 
     useEffect(() => {
