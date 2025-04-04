@@ -38,20 +38,20 @@ export function AuthProvider(props) {
     }
 
 
-    async function saveToFirebase(data) {
-        if (!currentUser) {
-          console.log("❌ No currentUser inside saveToFirebase")
-          return
-        }
+    // async function saveToFirebase(data) {
+    //     if (!currentUser) {
+    //       console.log("❌ No currentUser inside saveToFirebase")
+    //       return
+    //     }
 
-        try {
-          const userRef = doc(db, 'users', currentUser.uid)
-          await setDoc(userRef, { subscriptions: data }, { merge: true })
-          console.log("✅ Saved to Firestore")
-        } catch (err) {
-          console.error("❌ Failed to save to Firestore:", err.message)
-        }
-    }
+    //     try {
+    //       const userRef = doc(db, 'users', currentUser.uid)
+    //       await setDoc(userRef, { subscriptions: data }, { merge: true })
+    //       console.log("✅ Saved to Firestore")
+    //     } catch (err) {
+    //       console.error("❌ Failed to save to Firestore:", err.message)
+    //     }
+    // }
 
 
 
@@ -121,22 +121,17 @@ export function AuthProvider(props) {
           }
 
           try {
-            const docRef = doc(db, 'users', user.uid)
-            const docSnap = await getDoc(docRef)
+            const hardcodedUserId = "test-user-123" // temporary!
+            const res = await fetch(`http://localhost:5001/api/subscriptions/${hardcodedUserId}`)
 
-            let firebaseData = { subscriptions: [] }
+            if (!res.ok) throw new Error("Failed to fetch subscriptions")
 
-            if (docSnap.exists()) {
-              console.log("✅ User data found in Firestore")
-              firebaseData = docSnap.data()
-            } else {
-              console.log("🆕 Creating new user document")
-              await setDoc(docRef, firebaseData)
-            }
+            const data = await res.json()
+            setUserData({ subscriptions: data })
+            console.log("✅ Loaded subscriptions from API:", data)
 
-            setUserData(firebaseData)
           } catch (err) {
-            console.error("❌ Error loading user data:", err)
+            console.error("❌ Error loading subs from API:", err)
           }
         })
 

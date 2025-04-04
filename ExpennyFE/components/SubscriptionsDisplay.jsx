@@ -12,11 +12,11 @@ export default function SubscriptionsDisplay(props) {
       <section>
         <h2>Your Subcriptions</h2>
         <div className='card-container'>
-          {userData.subscriptions.map((sub, subIndex) => {
+          {userData.subscriptions.map((sub) => {
             const { name, category, cost, currency, billingFrequency, startDate, notes, status } = sub
 
             return (
-              <div key={subIndex} className='card subscription-card'>
+              <div key={sub.id} className='card subscription-card'>
                 <div>
                   <h3>{name}</h3>
                   <div className={'status ' + (status === 'Active' ? 'card-button-primary' : 'card-button-secondary')}>
