@@ -49,13 +49,13 @@ export default function SubscriptionsDisplay(props) {
 
                 <div className="subscription-actions">
                   <button onClick={() => {
-                    handleEditSubscription(subIndex)
+                    handleEditSubscription(sub.id)
                   }} className="button-card">
                   <i className="fa-solid fa-pen-to-square"></i>
                     Edit
                   </button>
                   <button onClick={() => {
-                    handleDeleteSubscription(subIndex)
+                    handleDeleteSubscription(sub.id)
                   }} className="button-card">
                   <i className="fa-solid fa-trash"></i>
                     Delete

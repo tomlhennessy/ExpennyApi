@@ -65,14 +65,19 @@ export function AuthProvider(props) {
         // setUserData({ subscriptions: newSubscriptions })
         // await saveToFirebase(newSubscriptions)
 
+        const subWithUserId = {
+          ...newSubscription,
+          userId: "test-user-123"
+        }
+
         // New:
         try {
-          const res = await fetch('http://localhost:5001/api/subscriptions', {
+          const res = await fetch('http://localhost:5000/api/subscriptions', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newSubscription)
+            body: JSON.stringify(subWithUserId)
           })
 
           if (!res.ok) throw new Error('Failed to add sub')
@@ -85,15 +90,14 @@ export function AuthProvider(props) {
     }
 
 
-    async function handleDeleteSubscription(index) {
-        const subId = userData.subscriptions[index].id
+    async function handleDeleteSubscription(subId) {
         if (!subId) {
           console.error("No subId found")
           return
         }
 
         try {
-          const res = await fetch(`http://localhost:5001/api/subscriptions/${subId}`, {
+          const res = await fetch(`http://localhost:5000/api/subscriptions/${subId}`, {
             method: 'DELETE'
           })
 
@@ -122,7 +126,7 @@ export function AuthProvider(props) {
 
           try {
             const hardcodedUserId = "test-user-123" // temporary!
-            const res = await fetch(`http://localhost:5001/api/subscriptions/${hardcodedUserId}`)
+            const res = await fetch(`http://localhost:5000/api/subscriptions/${hardcodedUserId}`)
 
             if (!res.ok) throw new Error("Failed to fetch subscriptions")
 
