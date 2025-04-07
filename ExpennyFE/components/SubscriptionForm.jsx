@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext"
 import { useState } from "react"
 
 export default function SubscriptionForm(props) {
-    const { onSubmit, closeInput, formData, handleChangeInput, handleResetForm } = props
+    const { onSubmit, closeInput, formData, handleChangeInput, handleResetForm, editId } = props
     const { handleAddSubscription } = useAuth()
 
 
@@ -14,10 +14,26 @@ export default function SubscriptionForm(props) {
         console.log("📤 Submitting subscription:", formData)
 
         try {
-            await handleAddSubscription(formData)
-            console.log("✅ Subscription saved")
-            handleResetForm()
-            closeInput()
+            if (editId) {
+                // PUT: update existing subscription
+                const res = await fetch(`http://localhost:5000/api/subscriptions/${editId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+
+                if (!res.ok) throw new Error("Failed to update subscription")
+                console.log("Subscription updated")
+            } else {
+                // POST: add new subscription
+                await handleAddSubscription(formData)
+                console.log("Subscription added")
+            }
+
+            props.handleResetForm()
+            props.closeInput()
         } catch (err) {
             console.error("❌ Error saving subscription:", err.message)
         }
@@ -109,7 +125,7 @@ export default function SubscriptionForm(props) {
                 <div className='fat-column form-submit-btns'>
                     <button onClick={closeInput}>Cancel</button>
                     <button type='submit'>
-                        Add Subscription
+                        {editId ? "Update Subscription" : "Add Subscription"}
                         </button>
                 </div>
 

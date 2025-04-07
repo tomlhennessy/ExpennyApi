@@ -29,6 +29,8 @@ export default function DashboardPage() {
     const { handleDeleteSubscription, userData, currentUser, loading } = useAuth()
     const isAuthenticated = !!currentUser
 
+    const [editId, setEditId] = useState(null)
+
     function handleChangeInput(e) {
         const newData = {
             ...formData,
@@ -37,17 +39,15 @@ export default function DashboardPage() {
         setFormData(newData)
     }
 
-    function handleEditSubscription(index) {
-      const data = userData.subscriptions.find((val, valIndex) => {
-        return valIndex === index
-      })
-      setFormData(inputObj)
-      handleDeleteSubscription(index)
+    function handleEditSubscription(sub) {
+      setFormData(sub)
+      setEditId(sub.id)
       setIsAddEntry(true)
     }
 
     function handleResetForm() {
       setFormData(blankSubscription)
+      setEditId(null)
     }
 
     function handleToggleInput() {
@@ -71,9 +71,18 @@ export default function DashboardPage() {
     return (
       <div className='section-container'>
         <SubscriptionSummary />
-        <SubscriptionsDisplay handleEditSubscription={handleEditSubscription} handleShowInput={ isAddEntry ? () => { } : handleToggleInput} />
+        <SubscriptionsDisplay
+          handleEditSubscription={handleEditSubscription}
+          handleShowInput={ isAddEntry ? () => { } : handleToggleInput}
+        />
         {isAddEntry && (
-          <SubscriptionForm handleResetForm={handleResetForm} closeInput={handleToggleInput} formData={formData} handleChangeInput={handleChangeInput} />
+          <SubscriptionForm
+            handleResetForm={handleResetForm}
+            closeInput={handleToggleInput}
+            formData={formData}
+            handleChangeInput={handleChangeInput}
+            editId={editId}
+          />
         )}
       </div>
     );
