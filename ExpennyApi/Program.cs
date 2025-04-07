@@ -1,5 +1,7 @@
 using ExpennyApi.Data;
+using ExpennyApi.Models;
 using ExpennyApi.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,9 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 // Optional: Explicit ports (only needed if launchSettings isn't behaving)
 builder.WebHost.ConfigureKestrel(options =>

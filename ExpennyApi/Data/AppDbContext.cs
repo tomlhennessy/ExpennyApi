@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ExpennyApi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ExpennyApi.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
