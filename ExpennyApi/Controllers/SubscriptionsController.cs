@@ -18,7 +18,9 @@ namespace ExpennyApi.Controllers
             _repo = repo;
         }
 
-        // GET: /api/subscriptions/{userId}
+        /// <summary>
+        /// Get all subscriptions for a specific user.
+        /// </summary>
         [HttpGet("{userId}")]
         public ActionResult<IEnumerable<Subscription>> GetByUser(string userId)
         {
@@ -27,7 +29,9 @@ namespace ExpennyApi.Controllers
             return Ok(subs);
         }
 
-        // POST: /api/subscriptions
+        /// <summary>
+        /// Create a new subscription.
+        /// </summary>
         [HttpPost]
         public ActionResult<Subscription> AddSubscription([FromBody] SubscriptionDTO dto)
         {
@@ -51,7 +55,9 @@ namespace ExpennyApi.Controllers
             return CreatedAtAction(nameof(GetByUser), new { userId = sub.UserId }, sub);
         }
 
-        // DELETE: /api/subscriptions/{id}
+        /// <summary>
+        /// Delete a subscription.
+        /// </summary>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -65,7 +71,9 @@ namespace ExpennyApi.Controllers
             return NoContent();
         }
 
-        // PUT: /api/subscriptions/{id}
+        /// <summary>
+        /// Update an existing subscription.
+        /// </summary>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] PutSubscriptionDTO updated)
         {
