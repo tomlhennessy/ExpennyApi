@@ -15,7 +15,11 @@ builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 // Add Controllers + Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); // Needed for Swagger
-builder.Services.AddSwaggerGen();           // Adds Swagger
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});           // Adds Swagger
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",

@@ -164,7 +164,11 @@
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/ExpennyApi.runtimeconfig.json
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/ExpennyApi.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/ExpennyApi.pdb
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/ExpennyApi.xml
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Humanizer.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Build.Locator.dll
@@ -186,6 +190,8 @@
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Identity.Core.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Identity.Stores.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
@@ -311,11 +317,7 @@
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.csproj.Up2Date
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.dll
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/refint/ExpennyApi.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.xml
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.pdb
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.genruntimeconfig.cache
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ref/ExpennyApi.dll
-/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.Internal.dll
-/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Identity.Core.dll
-/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.Extensions.Identity.Stores.dll
