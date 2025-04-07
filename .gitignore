@@ -3,6 +3,8 @@ ExpennyAPI/bin/
 ExpennyAPI/obj/
 ExpennyAPI/*.db
 ExpennyAPI/Migrations/
+ExpennyAPI/.vscode/
+ExpennyAPI/appsettings.*.json
 
 # ========== FRONTEND (ExpennyFE) ==========
 ExpennyFE/.next/
