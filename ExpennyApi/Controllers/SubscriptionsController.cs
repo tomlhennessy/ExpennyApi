@@ -5,6 +5,7 @@ using ExpennyApi.Repositories;
 using SQLitePCL;
 using ExpennyApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ExpennyApi.Controllers
 {
@@ -23,9 +24,11 @@ namespace ExpennyApi.Controllers
         /// <summary>
         /// Get all subscriptions for a specific user.
         /// </summary>
-        [HttpGet("{userId}")]
-        public ActionResult<IEnumerable<Subscription>> GetByUser(string userId)
+        [HttpGet]
+        public ActionResult<IEnumerable<Subscription>> GetMySubs()
         {
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            if (userId == null) return Unauthorized("User ID not found in token.");
             var subs = _repo.GetByUserId(userId);
 
             return Ok(subs);
@@ -37,6 +40,9 @@ namespace ExpennyApi.Controllers
         [HttpPost]
         public ActionResult<Subscription> AddSubscription([FromBody] SubscriptionDTO dto)
         {
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            if (userId == null) return Unauthorized("User ID not found in token.");
+
             var sub = new Subscription
             {
                 Name = dto.Name,
@@ -49,12 +55,13 @@ namespace ExpennyApi.Controllers
                 RenewalType = dto.RenewalType,
                 Notes = dto.Notes,
                 Status = dto.Status,
-                UserId = dto.UserId
+                UserId = userId
             };
             _repo.Add(sub);
             _repo.Save();
 
-            return CreatedAtAction(nameof(GetByUser), new { userId = sub.UserId }, sub);
+            return Ok(sub);
+
         }
 
         /// <summary>
@@ -63,9 +70,10 @@ namespace ExpennyApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
             var sub = _repo.GetById(id);
-            if (sub == null) return NotFound();
+            if (sub == null || sub.UserId != userId)
+                return Unauthorized("Not allowed to access this resource.");
 
             _repo.Delete(sub);
             _repo.Save();
@@ -79,8 +87,11 @@ namespace ExpennyApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] PutSubscriptionDTO updated)
         {
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
             var existing = _repo.GetById(id);
-            if (existing == null) return NotFound();
+
+            if (existing == null || existing.UserId != userId)
+                return Unauthorized("Not allowed to access this resource.");
 
             existing.Name = updated.Name;
             existing.Category = updated.Category;
