@@ -321,3 +321,11 @@
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.pdb
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ExpennyApi.genruntimeconfig.cache
 /Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/obj/Debug/net9.0/ref/ExpennyApi.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/Users/tomhennessy/workspace/github.com/tomlhennessy/ExpennyFullstack/ExpennyApi/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

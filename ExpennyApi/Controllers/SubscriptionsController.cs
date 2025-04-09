@@ -4,9 +4,11 @@ using ExpennyApi.Models;
 using ExpennyApi.Repositories;
 using SQLitePCL;
 using ExpennyApi.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpennyApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SubscriptionsController : ControllerBase
