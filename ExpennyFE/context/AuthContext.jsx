@@ -11,6 +11,20 @@ export function useAuth() {
     return useContext(AuthContext)
 }
 
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+      '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    ).join(''))
+
+    return JSON.parse(jsonPayload)
+  } catch (err) {
+    return null
+  }
+}
+
 
 export function AuthProvider(props) {
     const { children } = props
@@ -18,133 +32,169 @@ export function AuthProvider(props) {
     const [currentUser, setCurrentUser] = useState(null)
     const [userData, setUserData] = useState({ subscriptions: []})
     const [loading, setLoading] = useState(false)
+    const [token, setToken] = useState(null)
 
-    function signup(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password)
+    async function signup(email, password) {
+      const res = await fetch("http://localhost:5001/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+
+      if (!res.ok) throw new Error("Signup failed")
     }
 
-    function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password)
-    }
-
-    async function logout() {
+    async function login(email, password) {
         try {
-            await signOut(auth)
-            setCurrentUser(null)
-            setUserData({ subscriptions: [] })
-        } catch (err) {
-            console.log('Logout error:', err.message)
-        }
-    }
-
-
-    // async function saveToFirebase(data) {
-    //     if (!currentUser) {
-    //       console.log("❌ No currentUser inside saveToFirebase")
-    //       return
-    //     }
-
-    //     try {
-    //       const userRef = doc(db, 'users', currentUser.uid)
-    //       await setDoc(userRef, { subscriptions: data }, { merge: true })
-    //       console.log("✅ Saved to Firestore")
-    //     } catch (err) {
-    //       console.error("❌ Failed to save to Firestore:", err.message)
-    //     }
-    // }
-
-
-
-    async function handleAddSubscription(newSubscription) {
-        if (!currentUser) {
-          console.log("🚫 Tried to add subscription but currentUser is null")
-          return
-        }
-        // OLD:
-        // const newSubscriptions = [...userData.subscriptions, newSubscription]
-        // setUserData({ subscriptions: newSubscriptions })
-        // await saveToFirebase(newSubscriptions)
-
-        const subWithUserId = {
-          ...newSubscription,
-          userId: "test-user-123"
-        }
-
-        // New:
-        try {
-          const res = await fetch('http://localhost:5000/api/subscriptions', {
-            method: 'POST',
+          const res = await fetch("http://localhost:5001/api/auth/login", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json"
             },
-            body: JSON.stringify(subWithUserId)
+            body: JSON.stringify({ email, password })
           })
 
-          if (!res.ok) throw new Error('Failed to add sub')
+          if (!res.ok) throw new Error("Login failed")
 
           const data = await res.json()
-          console.log("Sub added:", data)
+          setToken(data.token)
+
+          const userInfo = parseJwt(data.token)
+          setCurrentUser({ email: userInfo.email, userId: userInfo.sub })
+
+          localStorage.setItem("token", data.token)
         } catch (err) {
-          console.error("Error:", err)
+          console.error("Login error:", err.message)
+          throw err
         }
     }
+
+    function logout() {
+          setToken(null)
+          setCurrentUser(null)
+          setUserData({ subscriptions: [] })
+          localStorage.removeItem("token")
+    }
+
+    async function handleAddSubscription(newSubscription) {
+      if (!token) return
+
+      try {
+        const res = await fetch('http://localhost:5001/api/subscriptions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(newSubscription)
+        })
+
+        if (!res.ok) throw new Error('Failed to add sub')
+
+        const data = await res.json()
+        console.log("✅ Sub added:", data)
+      } catch (err) {
+        console.error("❌ Error adding subscription:", err)
+      }
+    }
+
 
 
     async function handleDeleteSubscription(subId) {
-        if (!subId) {
-          console.error("No subId found")
-          return
-        }
+      if (!token || !subId) {
+        console.error("Missing token or subId")
+        return
+      }
 
-        try {
-          const res = await fetch(`http://localhost:5000/api/subscriptions/${subId}`, {
-            method: 'DELETE'
-          })
-
-          if (!res.ok) throw new Error('Failed to delete')
-
-          console.log("Deleted subscription ID:", subId)
-
-          // OPTIONAL: update local state or re-fetch
-          // const newSubscriptions = userData.subscriptions.filter((s) => s.id !== subId)
-          // setUserData({ subscriptions: newSubscriptions })
-        } catch (err) {
-          console.error("Error deleting:", err)
-        }
-    }
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-
-          setCurrentUser(user)
-
-          if (!user) {
-            console.log("🚪 No user - redirecting or staying logged out")
-            setUserData({ subscriptions: [] })
-            return
-          }
-
-          try {
-            const hardcodedUserId = "test-user-123" // temporary!
-            const res = await fetch(`http://localhost:5000/api/subscriptions/${hardcodedUserId}`)
-
-            if (!res.ok) throw new Error("Failed to fetch subscriptions")
-
-            const data = await res.json()
-            setUserData({ subscriptions: data })
-            console.log("✅ Loaded subscriptions from API:", data)
-
-          } catch (err) {
-            console.error("❌ Error loading subs from API:", err)
+      try {
+        const res = await fetch(`http://localhost:5001/api/subscriptions/${subId}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`
           }
         })
 
-        return unsubscribe
+        if (!res.ok) throw new Error('Failed to delete')
+
+        console.log("🗑️ Deleted subscription ID:", subId)
+
+        // 🔄 Re-fetch updated list
+        const refresh = await fetch(`http://localhost:5001/api/subscriptions`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+    const updatedSubs = await refresh.json()
+    setUserData({ subscriptions: updatedSubs })
+
+      } catch (err) {
+        console.error("❌ Error deleting:", err)
+      }
+    }
+
+    async function handleUpdateSubscription(id, updatedData) {
+      if (!token) {
+        console.error("Missing token for update")
+        return
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5001/api/subscriptions/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(updatedData)
+        })
+
+        if (!res.ok) throw new Error("Failed to update subscription")
+
+        console.log("✅ PUT request successful")
+
+        // 🔄 Refresh data
+        const refresh = await fetch(`http://localhost:5001/api/subscriptions`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        const updatedSubs = await refresh.json()
+        setUserData({ subscriptions: updatedSubs })
+
+      } catch (err) {
+        console.error("❌ Error updating subscription:", err)
+      }
+    }
+
+
+
+    useEffect(() => {
+      const storedToken = localStorage.getItem("token")
+      if (!storedToken) return
+
+      const userInfo = parseJwt(storedToken)
+      if (!userInfo) return
+
+      setToken(storedToken)
+      setCurrentUser({ email: userInfo.email, userId: userInfo.sub })
+
+      fetch(`http://localhost:5001/api/subscriptions`, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          setUserData({ subscriptions: data })
+        })
     }, [])
 
 
+
     const value = {
-        currentUser, userData, loading, signup, login, logout, handleAddSubscription, handleDeleteSubscription
+        currentUser, userData, loading, signup, login, logout, handleAddSubscription, handleDeleteSubscription, handleUpdateSubscription
     }
 
 

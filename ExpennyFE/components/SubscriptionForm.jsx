@@ -5,37 +5,27 @@ import { useState } from "react"
 
 export default function SubscriptionForm(props) {
     const { onSubmit, closeInput, formData, handleChangeInput, handleResetForm, editId } = props
-    const { handleAddSubscription } = useAuth()
+    const { handleAddSubscription, handleUpdateSubscription } = useAuth()
 
 
 
     async function handleFormSubmit(e) {
-        e.preventDefault();
-        console.log("📤 Submitting subscription:", formData)
+        e.preventDefault()
+        console.log("📤 Submitting:", formData)
 
         try {
-            if (editId) {
-                // PUT: update existing subscription
-                const res = await fetch(`http://localhost:5000/api/subscriptions/${editId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
+          if (editId) {
+            await handleUpdateSubscription(editId, formData)
+            console.log("✅ Subscription updated")
+          } else {
+            await handleAddSubscription(formData)
+            console.log("✅ Subscription added")
+          }
 
-                if (!res.ok) throw new Error("Failed to update subscription")
-                console.log("Subscription updated")
-            } else {
-                // POST: add new subscription
-                await handleAddSubscription(formData)
-                console.log("Subscription added")
-            }
-
-            props.handleResetForm()
-            props.closeInput()
+          handleResetForm()
+          closeInput()
         } catch (err) {
-            console.error("❌ Error saving subscription:", err.message)
+          console.error("❌ Error submitting:", err.message)
         }
     }
 
