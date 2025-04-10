@@ -46,7 +46,7 @@ export function AuthProvider(props) {
         console.error("❌ Signup failed:", JSON.stringify(errorData, null, 2))
         throw new Error("Signup failed")
       }
-      
+
 
     }
 
@@ -99,6 +99,14 @@ export function AuthProvider(props) {
 
         const data = await res.json()
         console.log("✅ Sub added:", data)
+
+        // 🔄 Re-fetch updated list
+        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
       } catch (err) {
         console.error("❌ Error adding subscription:", err)
       }
@@ -125,7 +133,7 @@ export function AuthProvider(props) {
         console.log("🗑️ Deleted subscription ID:", subId)
 
         // 🔄 Re-fetch updated list
-        const refresh = await fetch(`http://localhost:5001/api/subscriptions`, {
+        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
