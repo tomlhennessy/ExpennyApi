@@ -182,6 +182,16 @@ export function getDaysUntilNextCharge(startDate, billingFrequency) {
 // Example Usage
 // console.log(getDaysUntilNextCharge("2024-02-01", "Monthly"))  // Example output: 30
 
+// Nicely format subscription start dates
+export function formatDateReadable(dateStr) {
+    return new Date(dateStr).toLocaleDateString("en-AU", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    })
+  }
+
+
 
 export const subscriptions = [
     {

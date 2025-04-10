@@ -25,6 +25,14 @@ function parseJwt(token) {
   }
 }
 
+function isTokenExpired(token) {
+  const payload = parseJwt(token)
+  if (!payload?.exp) return true
+  const expiry = payload.exp * 1000 // convert to ms
+  return Date.now() > expiry
+}
+
+
 
 export function AuthProvider(props) {
     const { children } = props
@@ -172,24 +180,24 @@ export function AuthProvider(props) {
 
     useEffect(() => {
       const storedToken = localStorage.getItem("token")
-      if (!storedToken) return
+      if (!storedToken || isTokenExpired(storedToken)) {
+        logout()
+        return
+      }
 
       const userInfo = parseJwt(storedToken)
-      if (!userInfo) return
-
       setToken(storedToken)
       setCurrentUser({ email: userInfo.email, userId: userInfo.sub })
 
-      fetch(`https://localhost:5001/api/subscriptions`, {
-        headers: {
-          Authorization: `Bearer ${storedToken}`
-        }
+      fetch("https://localhost:5001/api/subscriptions", {
+        headers: { Authorization: `Bearer ${storedToken}` }
       })
         .then(res => res.json())
         .then(data => {
           setUserData({ subscriptions: data })
         })
     }, [])
+
 
 
 

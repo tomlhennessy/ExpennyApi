@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext"
-import { getDaysUntilNextCharge, subscriptions } from "@/utils"
+import { formatDateReadable, getDaysUntilNextCharge, subscriptions } from "@/utils"
 
 
 export default function SubscriptionsDisplay(props) {
@@ -36,7 +36,7 @@ export default function SubscriptionsDisplay(props) {
                 <div className="sub-renewal">
                     <div>
                       <p>Started</p>
-                      <h4>{startDate}</h4>
+                      <h4>{formatDateReadable(startDate)}</h4>
                   </div>
                   <div>
                     <p>Due</p>
