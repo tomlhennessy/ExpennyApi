@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingSpinner from "@/components/LoadingSpinner";
 import Login from "@/components/Login";
 import SubscriptionForm from "@/components/SubscriptionForm";
 import SubscriptionsDisplay from "@/components/SubscriptionsDisplay";
@@ -56,13 +57,13 @@ export default function DashboardPage() {
 
     if (loading) {
       return (
-        <p>Loading...</p>
+        <LoadingSpinner />
       )
     }
 
     if (!isAuthenticated) {
       return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Login />
         </Suspense>
       )

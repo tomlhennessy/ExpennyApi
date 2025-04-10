@@ -35,7 +35,7 @@ export function AuthProvider(props) {
     const [token, setToken] = useState(null)
 
     async function signup(email, password) {
-      const res = await fetch("http://localhost:5001/api/auth/register", {
+      const res = await fetch("https://localhost:5001/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -46,7 +46,7 @@ export function AuthProvider(props) {
 
     async function login(email, password) {
         try {
-          const res = await fetch("http://localhost:5001/api/auth/login", {
+          const res = await fetch("https://localhost:5001/api/auth/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -80,7 +80,7 @@ export function AuthProvider(props) {
       if (!token) return
 
       try {
-        const res = await fetch('http://localhost:5001/api/subscriptions', {
+        const res = await fetch('https://localhost:5001/api/subscriptions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ export function AuthProvider(props) {
       }
 
       try {
-        const res = await fetch(`http://localhost:5001/api/subscriptions/${subId}`, {
+        const res = await fetch(`https://localhost:5001/api/subscriptions/${subId}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`
@@ -140,7 +140,7 @@ export function AuthProvider(props) {
       }
 
       try {
-        const res = await fetch(`http://localhost:5001/api/subscriptions/${id}`, {
+        const res = await fetch(`https://localhost:5001/api/subscriptions/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ export function AuthProvider(props) {
         console.log("✅ PUT request successful")
 
         // 🔄 Refresh data
-        const refresh = await fetch(`http://localhost:5001/api/subscriptions`, {
+        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -180,7 +180,7 @@ export function AuthProvider(props) {
       setToken(storedToken)
       setCurrentUser({ email: userInfo.email, userId: userInfo.sub })
 
-      fetch(`http://localhost:5001/api/subscriptions`, {
+      fetch(`https://localhost:5001/api/subscriptions`, {
         headers: {
           Authorization: `Bearer ${storedToken}`
         }
