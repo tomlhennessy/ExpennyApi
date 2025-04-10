@@ -58,8 +58,9 @@ namespace ExpennyApi.Controllers
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!)
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email!)
+
             };
 
             var expiresInStr = jwtSettings["ExpiresInMinutes"];

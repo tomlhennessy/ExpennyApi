@@ -41,7 +41,13 @@ export function AuthProvider(props) {
         body: JSON.stringify({ email, password })
       })
 
-      if (!res.ok) throw new Error("Signup failed")
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        console.error("❌ Signup failed:", JSON.stringify(errorData, null, 2))
+        throw new Error("Signup failed")
+      }
+      
+
     }
 
     async function login(email, password) {

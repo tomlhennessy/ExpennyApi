@@ -57,7 +57,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .WithOrigins("http://localhost:3000") // React app
+                .WithOrigins("http://localhost:3000", "https://localhost:3000") // React app
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -116,9 +116,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
 app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 app.Run();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExpennyApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6d6ab508b84b0f2edfbe3040a9be31b65a95cd0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09c72b9f916e39cb3fba5efdaa6976ca6f6b37de")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExpennyApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpennyApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
