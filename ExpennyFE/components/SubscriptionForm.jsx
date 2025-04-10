@@ -7,11 +7,19 @@ export default function SubscriptionForm(props) {
     const { onSubmit, closeInput, formData, handleChangeInput, handleResetForm, editId } = props
     const { handleAddSubscription, handleUpdateSubscription } = useAuth()
 
+    const [submitting, setSubmitting] = useState(false)
+
 
 
     async function handleFormSubmit(e) {
         e.preventDefault()
-        console.log("📤 Submitting:", formData)
+
+        if (!formData.name || !formData.cost || !formData.startDate) {
+            alert("Please fill out all required fields.")
+            return
+        }
+
+        setSubmitting(true)
 
         try {
           if (editId) {
@@ -26,6 +34,8 @@ export default function SubscriptionForm(props) {
           closeInput()
         } catch (err) {
           console.error("❌ Error submitting:", err.message)
+        } finally {
+            setSubmitting(false)
         }
     }
 
@@ -114,9 +124,12 @@ export default function SubscriptionForm(props) {
 
                 <div className='fat-column form-submit-btns'>
                     <button onClick={closeInput}>Cancel</button>
-                    <button type='submit'>
-                        {editId ? "Update Subscription" : "Add Subscription"}
-                        </button>
+                    <button type='submit' disabled={submitting}>
+                        {submitting ? "Submitting..." : editId ?
+                        "Update Subscription" :
+                        "Add Subscription"}
+                    </button>
+
                 </div>
 
             </form>

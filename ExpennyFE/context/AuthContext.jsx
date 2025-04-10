@@ -34,6 +34,15 @@ export function AuthProvider(props) {
     const [loading, setLoading] = useState(false)
     const [token, setToken] = useState(null)
 
+
+    async function refreshSubscriptions() {
+      const res = await fetch('https://localhost:5001/api/subscriptions', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const data = await res.json()
+      setUserData({ subscriptions: data })
+    }
+
     async function signup(email, password) {
       const res = await fetch("https://localhost:5001/api/auth/register", {
         method: "POST",
@@ -100,13 +109,7 @@ export function AuthProvider(props) {
         const data = await res.json()
         console.log("✅ Sub added:", data)
 
-        // 🔄 Re-fetch updated list
-        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-
+        refreshSubscriptions()
       } catch (err) {
         console.error("❌ Error adding subscription:", err)
       }
@@ -132,16 +135,7 @@ export function AuthProvider(props) {
 
         console.log("🗑️ Deleted subscription ID:", subId)
 
-        // 🔄 Re-fetch updated list
-        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-
-    const updatedSubs = await refresh.json()
-    setUserData({ subscriptions: updatedSubs })
-
+        refreshSubscriptions()
       } catch (err) {
         console.error("❌ Error deleting:", err)
       }
@@ -167,15 +161,7 @@ export function AuthProvider(props) {
 
         console.log("✅ PUT request successful")
 
-        // 🔄 Refresh data
-        const refresh = await fetch(`https://localhost:5001/api/subscriptions`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-
-        const updatedSubs = await refresh.json()
-        setUserData({ subscriptions: updatedSubs })
+        refreshSubscriptions()
 
       } catch (err) {
         console.error("❌ Error updating subscription:", err)

@@ -25,6 +25,7 @@ export default function Login() {
         if (isRegistration) {
           // register a user
           await signup(email, password)
+          await login(email, password) // auto login
         } else {
           // login a user
           await login(email, password)
