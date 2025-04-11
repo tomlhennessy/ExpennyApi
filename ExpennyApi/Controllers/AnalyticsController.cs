@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using ExpennyApi.Services;
 using ExpennyApi.Repositories;
 using ExpennyApi.DTOs;
+using System.Security.Claims;
 
 namespace ExpennyApi.Controllers
 {
@@ -21,16 +22,31 @@ namespace ExpennyApi.Controllers
             _analytics = analytics;
         }
 
+        private string GetUserIdOrThrow()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                throw new UnauthorizedAccessException("User ID not found in token.");
+            return userId;
+        }
+
+
         [HttpGet]
         public ActionResult<SubscriptionAnalyticsDTO> GetAnalytics()
         {
-            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-            if (userId == null) return Unauthorized("Missing user ID");
+            try
+            {
+                var userId = GetUserIdOrThrow();
+                var subs = _repo.GetByUserId(userId).ToList();
+                var result = _analytics.CalculateMetrics(subs);
 
-            var subs = _repo.GetByUserId(userId).ToList();
-            var result = _analytics.CalculateMetrics(subs);
-
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
+
     }
 }

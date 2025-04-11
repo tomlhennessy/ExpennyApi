@@ -8,6 +8,18 @@ export default function SubscriptionSummary() {
 
   const emojis = ['🔥', '✅', '⭐️', '⚡️', '🎉', '✨', '🏆', '🌼', '🌱', '🐛', '🐙', '🪼']
 
+  let value = summary[metric]
+
+  // Format only for certain metrics
+  if (
+    metric === "total_monthly_cost" ||
+    metric === "total_yearly_cost" ||
+    metric === "average_monthly_spending"
+  ) {
+    value = formatCurrency(value)
+  }
+
+
 
     return (
       <section>
@@ -17,7 +29,7 @@ export default function SubscriptionSummary() {
             return (
               <div key={metricIndex} className='analytics-item'>
                 <p>{emojis[metricIndex]} {metric.replaceAll('_', ' ')}</p>
-                <h4>{summary[metric]}</h4>
+                <h4>{value}</h4>
               </div>
             )
           })}
