@@ -1,6 +1,7 @@
 using ExpennyApi.Data;
 using ExpennyApi.Models;
 using ExpennyApi.Repositories;
+using ExpennyApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+builder.Services.AddScoped<AnalyticsService>();
 
 // Add Controllers + Swagger
 builder.Services.AddControllers();
