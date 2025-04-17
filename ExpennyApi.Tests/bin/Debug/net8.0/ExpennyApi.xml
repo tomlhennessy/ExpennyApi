@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExpennyApi</name>
+    </assembly>
+    <members>
+        <member name="M:ExpennyApi.Controllers.AnalyticsController.GetAnalytics">
+            <summary>
+            Get analytics summary for the logged-in user.
+            </summary>
+            <remarks>
+            Requires a valid JWT token. Returns total monthly/yearly cost, average monthly spending,
+            upcoming billing count, top spending category, and most expensive subscription.
+            </remarks>
+            <response code="200">Returns the user's analytics summary</response>
+            <response code="401">Unauthorized – user is not logged in or token is invalid</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.AuthController.Register(ExpennyApi.Controllers.RegisterDTO)">
+            <summary>
+            Register a new user with email and password.
+            </summary>
+            <remarks>
+            Creates a new account and stores credentials securely.
+            </remarks>
+            <param name="model">User's email and password</param>
+            <response code="200">Successfully registered</response>
+            <response code="400">Registration failed due to validation errors</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.AuthController.Login(ExpennyApi.Controllers.LoginDTO)">
+            <summary>
+            Login with email and password to receive a JWT.
+            </summary>
+            <remarks>
+            Returns a JSON Web Token that must be included in the Authorization header for secure requests.
+            </remarks>
+            <param name="model">Login credentials</param>
+            <response code="200">Returns a valid JWT token</response>
+            <response code="401">Invalid login credentials</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.SubscriptionsController.GetMySubs">
+            <summary>
+            Get all subscriptions for the logged-in user.
+            </summary>
+            <remarks>
+            Requires a valid JWT token in the Authorization header.
+            </remarks>
+            <response code="200">Returns a list of subscriptions for the user</response>
+            <response code="401">Unauthorized if the token is missing or invalid</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.SubscriptionsController.AddSubscription(ExpennyApi.DTOs.SubscriptionDTO)">
+            <summary>
+            Create a new subscription for the current user.
+            </summary>
+            <remarks>
+            Requires a valid JWT token. All fields in the request body must be valid.
+            </remarks>
+            <param name="dto">The subscription data to add</param>
+            <response code="201">Subscription successfully created</response>
+            <response code="401">Unauthorized if the token is missing or invalid</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.SubscriptionsController.Delete(System.Int32)">
+            <summary>
+            Delete a subscription by ID.
+            </summary>
+            <remarks>
+            Requires a valid JWT token. Only the owner of the subscription can delete it.
+            </remarks>
+            <param name="id">The ID of the subscription to delete</param>
+            <response code="204">Subscription successfully deleted</response>
+            <response code="401">Unauthorized if the token is missing or access is denied</response>
+        </member>
+        <member name="M:ExpennyApi.Controllers.SubscriptionsController.Update(System.Int32,ExpennyApi.DTOs.PutSubscriptionDTO)">
+            <summary>
+            Update an existing subscription by ID.
+            </summary>
+            <remarks>
+            Requires a valid JWT token. Only the owner of the subscription can update it.
+            </remarks>
+            <param name="id">The ID of the subscription to update</param>
+            <param name="updated">Updated subscription details</param>
+            <response code="200">Subscription successfully updated</response>
+            <response code="401">Unauthorized if the token is missing or access is denied</response>
+        </member>
+        <member name="T:ExpennyApi.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ExpennyApi.Migrations.AddIdentityTables">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.AddIdentityTables.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.AddIdentityTables.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExpennyApi.Migrations.AddIdentityTables.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

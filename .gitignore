@@ -1,0 +1,54 @@
+# ========== BACKEND (ExpennyAPI) ==========
+
+# Build & Runtime
+ExpennyApi/bin/
+ExpennyApi/obj/
+ExpennyApi/publish/
+ExpennyApi/publish.zip
+ExpennyApi/*.db
+
+# Entity Framework Migrations 
+ExpennyApi/Migrations/
+
+# Configs & Secrets
+ExpennyApi/.vscode/
+ExpennyApi/appsettings.Development.json
+ExpennyApi/appsettings.Production.json
+
+# ========== FRONTEND (ExpennyFE) ==========
+
+# Build
+ExpennyFE/.next/
+ExpennyFE/out/
+ExpennyFE/build/
+
+# Dependencies
+ExpennyFE/node_modules/
+
+# Secrets
+ExpennyFE/.env*
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System
+.DS_Store
+*.pem
+
+# Vercel
+.vercel/
+
+# ========== GLOBAL ==========
+
+
+*.tsbuildinfo
+*.log
+next-env.d.ts
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
